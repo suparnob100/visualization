@@ -26,7 +26,7 @@ function printfig_(varargin)
     %   printfig_('Font', 14, 'Figname', 'MyCustomFigure')
     %
     % See also: inputParser
-
+    close all
     % Create an input parser instance
     p = inputParser;
 
@@ -40,7 +40,7 @@ function printfig_(varargin)
     defaultW = 4;
     defaultLegendOrientation = 0; % For horizontal: 1
     defaultChangeColor = 1;
-    defaultPad = 0.01;
+    defaultPad = 0;
 
     % Define parameters
     addParameter(p, 'Select', defaultSelect);
@@ -75,6 +75,8 @@ function printfig_(varargin)
     addpath(Path+"/sub_functions/")
     addpath(Path+"/utils/")
     addpath(Path+"/utils/export_fig")
+    addpath(Path+"/utils/matplotlib")
+
     
     if ~exist('FormatNumber','var')
         formats1 = getFormatInfo(); % Assume getFormats() returns formats1, formats2, and formats3
@@ -90,8 +92,8 @@ function printfig_(varargin)
         fig = openFigure(Filepath, i);
         modifyFigureProperties(fig, Font, ChangeColor); % Adjust basic figure properties like color
         adjustLineAndMarkerProperties(fig);     % Adjust line and marker properties
-        adjustAxisProperties(fig, L, W);    % Adjust axis properties
+        adjustAxisProperties2(fig, L, W);    % Adjust axis properties
         adjustLegend(fig, AdjustLegend, LegendOrientation, Pad);       % Adjust legend properties
-        printOutput(fig, FileName, frmt, i);    % Print or save the figure
+        printOutput(fig, FileName, PathName, frmt, i);    % Print or save the figure
     end
 end

@@ -43,5 +43,7 @@ function adjustLegend(fig, oll, ori, pad)
         yPad = pad * (yLimits(2) - yLimits(1));
         set(axesHandle, 'XLim', [xLimits(1) - xPad, xLimits(2) + xPad]);
         set(axesHandle, 'YLim', [yLimits(1) - yPad, yLimits(2) + yPad]);
+    else
+        axis tight
     end
 end

@@ -7,8 +7,8 @@ function adjustAxisProperties(fig, a, b)
 %     set(gca(fig), 'YMinorTick', 'on', 'LineWidth', 1.5, ...
 %                  'XMinorTick', 'on', 'TickDir', 'out', ...
 %                  'TickLength', [0.02, 0.02]);
-
-    set(fig, 'Units', 'inches', 'Color', [1, 1, 1]);
+    bg = 0.98*[1,1,1];
+    set(fig, 'Units', 'inches', 'Color', bg);
     set(gca(fig), 'Units', 'inches');
     
     % Set axis limits based on figure data
@@ -29,17 +29,17 @@ function adjustAxisProperties(fig, a, b)
     set(ax, 'YTickLabel', arrayfun(@(y) sprintf('%.1f', y), get(ax, 'YTick'), 'UniformOutput', false));
 
     % Enabling minor ticks
-    set(ax, 'XMinorTick', 'on', 'YMinorTick', 'on');
+    set(ax, 'XMinorTick', 'off', 'YMinorTick', 'off');
 
     % Customizing axis properties
     set(ax, 'LineWidth', 1.5, 'TickDir', 'out', 'TickLength', [0.02, 0.02]);
 
     % Customizing grid lines
-    set(ax, 'XGrid', 'off', 'YGrid', 'off', 'GridColor', 'k', 'GridLineStyle', '--');
+    set(ax, 'XGrid', 'on', 'YGrid', 'on', 'GridColor', 'w', 'GridLineStyle', '-','LineWidth',1);
 
     % Customizing axis colors
     set(ax, 'Box', 'off', 'XColor', 'k', 'YColor', 'k');
-    set(ax, 'Color', [0.98,0.98,0.98]); 
+    set(ax, 'Color', bg); 
 
     % Adjust the position and size of the figure and axes
     if ~isempty(a) && ~isempty(b)

@@ -1,4 +1,4 @@
-function printOutput(fig, FileName, PathName, frmt, i)
+function printOutput(fig, FileName, PathName, Filepath, frmt, i)
     % Function for printing or saving the figure in specified formats
     % fig: Handle to the figure
     % FileName: Name of the file to save
@@ -27,7 +27,7 @@ function printOutput(fig, FileName, PathName, frmt, i)
                 savefig(fig, PathName);
             case '-dpdf'
                 % Save as PDF
-                export_fig(strcat(PathName,currentFileName)+".pdf", '-q101','-transparent','-painters');
+                export_fig(currentFileName+".pdf", '-q101','-transparent','-painters');
             otherwise
                 % Print using the specified format
                 print(fig,  formatSpecifier, PathName);
