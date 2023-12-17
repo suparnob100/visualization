@@ -1,0 +1,75 @@
+function [plotData] = fig2data_(h2)
+% Extracts data from all axes in a MATLAB figure.
+% h2: Handle to the figure or name of the .fig file.
+
+% Load the figure if necessary
+if nargin < 1 || isempty(h2)
+    [fname, ~] = uigetfile('*.fig', 'Select .fig File', 'MultiSelect', 'off');
+    if fname == 0  % User cancelled file selection
+        error('No file selected.');
+    end
+    h = openfig(fname, 'invisible');
+else
+    h = h2;
+end
+
+% Get all axes handles
+axesHandles = findobj(h, 'type', 'axes');
+numAxes = length(axesHandles);
+
+% Check if there are any axes
+if numAxes == 0
+    error('No axes found in the figure.');
+end
+
+% Initialize output structure
+plotData = struct('x', {}, 'y', {}, 'lineStyle', {}, 'marker', {}, 'color', {}, 'xLabel', {}, 'yLabel', {}, 'title', {}, 'legends', {});
+
+% Loop through each axes object
+for axIdx = 1:numAxes
+    ax = axesHandles(axIdx);
+    lines = get(ax, 'Children');
+
+    % Check if there are any line objects
+    if isempty(lines)
+        warning('No line objects found in axes %d.', axIdx);
+        continue;
+    end
+
+    numLines = length(lines);
+    plotData(axIdx).x = cell(numLines, 1);
+    plotData(axIdx).y = cell(numLines, 1);
+    plotData(axIdx).lineStyle = cell(numLines, 1);
+    plotData(axIdx).marker = cell(numLines, 1);
+    plotData(axIdx).color = cell(numLines, 1);
+
+    % Extract data from each line object
+    for lineIdx = 1:numLines
+        line = lines(lineIdx);
+        plotData(axIdx).x{lineIdx} = get(line, 'XData');
+        plotData(axIdx).y{lineIdx} = get(line, 'YData');
+        plotData(axIdx).lineStyle{lineIdx} = get(line, 'LineStyle');
+        plotData(axIdx).marker{lineIdx} = get(line, 'Marker');
+        plotData(axIdx).color{lineIdx} = get(line, 'Color');
+    end
+
+    % Extract axes labels and title
+    plotData(axIdx).xLabel = get(get(ax, 'XLabel'), 'String');
+    plotData(axIdx).yLabel = get(get(ax, 'YLabel'), 'String');
+    plotData(axIdx).title = get(get(ax, 'Title'), 'String');
+
+    % Handle legends
+    legendHandle = legend(ax);
+    if ~isempty(legendHandle)
+        plotData(axIdx).legends = {legendHandle.String};
+    else
+        plotData(axIdx).legends = {};
+    end
+end
+
+% Close the figure if it was opened in this function
+if nargin < 1 || isempty(h2)
+    close(h);
+end
+
+end

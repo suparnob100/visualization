@@ -1,0 +1,72 @@
+function adjustAxisProperties(fig, a, b)
+    % Adjust axis properties in a figure
+%     % xp: flag for setting axis exponent
+%     % a, b: dimensions for box position
+% 
+%     % Set axis properties
+%     set(gca(fig), 'YMinorTick', 'on', 'LineWidth', 1.5, ...
+%                  'XMinorTick', 'on', 'TickDir', 'out', ...
+%                  'TickLength', [0.02, 0.02]);
+%     set(fig, 'Units', 'inches', 'Color', [1, 1, 1]);
+%     set(gca(fig), 'Units', 'inches');
+
+
+
+    % Customizing major ticks
+    numTicksX = 5; % Number of ticks on X-axis
+    numTicksY = 5; % Number of ticks on Y-axis
+    
+    set(ax, 'XTick', linspace(xmin, xmax, numTicksX), 'YTick', linspace(ymin, ymax, numTicksY));
+
+    % Customizing tick labels
+    set(ax, 'XTickLabel', arrayfun(@(x) sprintf('%.2f', x), get(ax, 'XTick'), 'UniformOutput', false));
+    set(ax, 'YTickLabel', arrayfun(@(y) sprintf('%.2f', y), get(ax, 'YTick'), 'UniformOutput', false));
+
+    % Enabling minor ticks
+    set(ax, 'XMinorTick', 'on', 'YMinorTick', 'on');
+
+    % Customizing axis properties
+    set(ax, 'LineWidth', 1.5, 'TickDir', 'out', 'TickLength', [0.02, 0.02]);
+
+    % Customizing grid lines
+    set(ax, 'XGrid', 'on', 'YGrid', 'on', 'GridColor', 'k', 'GridLineStyle', '--');
+
+    % Customizing font properties
+    set(ax, 'FontSize', 12, 'FontWeight', 'bold', 'FontAngle', 'italic');
+
+    % Customizing axis colors
+    set(ax, 'Box', 'off', 'XColor', 'r', 'YColor', 'b');
+    
+    
+    
+
+    % Set axis limits based on figure data
+    [x, y] = fig2data(fig);
+    xdata = cell2mat(x);
+    ydata = cell2mat(y);
+    set(gca(fig), 'XLim', [min(xdata) max(xdata)], 'YLim', [min(ydata) max(ydata)]);
+
+    % Adjust the position and size of the figure and axes
+    if ~isempty(a) && ~isempty(b)
+        BoxPos = [1, 1, a, b];
+    else
+        BoxPos = [1, 1, 5, 4]; % Default size
+    end
+    set(gca(fig), 'Position', BoxPos);
+    adjustFigurePosition(fig, BoxPos);
+end
+
+function adjustFigurePosition(fig, BoxPos)
+    % Adjust the position of the figure on the screen
+    set(0, 'Units', 'inch');
+    monitorPos = get(0, 'MonitorPositions');
+    pos = [monitorPos(1, 3)/2 - BoxPos(3)/2, monitorPos(1, 4)/2 - BoxPos(4)/2];
+    outerpos = get(gca, 'OuterPosition');
+    
+    if ~isempty(outerpos)
+        set(gca(fig), 'OuterPosition',[0, 0, outerpos(3), outerpos(4)]);
+        set(fig, 'Position', [pos(1), pos(2), outerpos(3), outerpos(4)]);
+    end
+
+    set(fig,'PaperPositionMode', 'auto');
+end
