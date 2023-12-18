@@ -22,7 +22,7 @@ function adjustAxisProperties2(fig, a, b)
             adjustBarChartProperties(ax, bg, fig)
         else
             % Adjust properties for other plot types
-            adjustGeneralPlotProperties(ax, bg);
+            adjustGeneralPlotProperties(ax, bg, fig);
         end
     else
         warning('No plot found in the figure.');
@@ -88,7 +88,7 @@ function adjustBarChartProperties(ax, bg, fig)
 end
 
 
-function adjustGeneralPlotProperties(ax, bg)
+function adjustGeneralPlotProperties(ax, bg, fig)
     % Set axis limits based on figure data
     [x, y] = fig2data(fig);
     xdata = cell2mat(x);
