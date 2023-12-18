@@ -35,7 +35,7 @@ function adjustLegend(fig, oll, ori, pad)
     end
 
     % Apply axis padding if pad is specified
-    if exist('pad', 'var') && pad > 0
+    if exist('pad', 'var')
         % Adjust axes limits based on padding
         xLimits = get(axesHandle, 'XLim');
         yLimits = get(axesHandle, 'YLim');
@@ -43,7 +43,5 @@ function adjustLegend(fig, oll, ori, pad)
         yPad = pad * (yLimits(2) - yLimits(1));
         set(axesHandle, 'XLim', [xLimits(1) - xPad, xLimits(2) + xPad]);
         set(axesHandle, 'YLim', [yLimits(1) - yPad, yLimits(2) + yPad]);
-    else
-        axis tight
     end
 end

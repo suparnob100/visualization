@@ -1,4 +1,5 @@
 function printfig_(varargin)
+
     %PRINTFIG_ Create and modify a figure with specified properties.
     %
     % Syntax:
@@ -19,13 +20,14 @@ function printfig_(varargin)
     %   W - Width of the figure (default: 10)
     %   LegendOrientation - Orientation of the legend ('vertical' or 'horizontal')
     %                         (default: 'vertical')
-    %   ChangeColor - Flag to change color (default: true)
+    %   ChangeColor - Flag to change color (default: 1)
     %   Pad - Padding around the figure (default: 0)
     %
     % Example:
     %   printfig_('Font', 14, 'Figname', 'MyCustomFigure')
     %
     % See also: inputParser
+
     close all
     % Create an input parser instance
     p = inputParser;

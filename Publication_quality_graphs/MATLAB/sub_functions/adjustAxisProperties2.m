@@ -4,8 +4,8 @@ function adjustAxisProperties2(fig, a, b)
     % a, b: Dimensions for box position
 
     % Set figure and axis units and background color
-    bg = 0.98 * [1, 1, 1]; % Background color
-    set(fig, 'Units', 'inches', 'Color', bg);
+    bg = 0.9 * [1, 1, 1]; % Background color
+    set(fig, 'Units', 'inches', 'Color', 'w');
     ax = gca(fig); % Get current axes
     set(ax, 'Units', 'inches', 'Color', bg);
 
@@ -34,8 +34,11 @@ function adjustAxisProperties2(fig, a, b)
     else
         BoxPos = [1, 1, 5, 4]; % Default size
     end
+    
+    adjustAnnotation(ax,a,b)
     set(ax, 'Position', BoxPos);
     adjustFigurePosition(fig, BoxPos);
+
 end
 
 function adjustHistogramProperties(ax, bg, fig)
@@ -87,7 +90,6 @@ function adjustBarChartProperties(ax, bg, fig)
     % Additional bar chart-specific adjustments can be added here
 end
 
-
 function adjustGeneralPlotProperties(ax, bg, fig)
     % Set axis limits based on figure data
     [x, y] = fig2data(fig);
@@ -95,7 +97,7 @@ function adjustGeneralPlotProperties(ax, bg, fig)
     ydata = cell2mat(y);
     set(gca(fig), 'XLim', [min(xdata) max(xdata)], 'YLim', [min(ydata) max(ydata)]);
 
-    % Customizing major ticks
+%   Customizing major ticks
 %     numTicksX = 5; % Number of ticks on X-axis
 %     numTicksY = 4; % Number of ticks on Y-axis
 %     set(ax, 'XTick', linspace(min(xdata), max(xdata), numTicksX), 'YTick', linspace(min(ydata), max(ydata), numTicksY));
@@ -132,3 +134,52 @@ function adjustFigurePosition(fig, BoxPos)
 
     set(fig,'PaperPositionMode', 'auto');
 end
+
+function adjustAnnotation(ax,a,b)
+
+    % Get current axes size
+    currentAxesSize = get(ax, 'Position');
+    currentWidth = currentAxesSize(3);
+    currentHeight = currentAxesSize(4);
+
+    allTextObjects = findall(ax, 'Type', 'text'); % Find all text objects
+
+    % Get handles for xlabel, ylabel, and title
+    xlabelHandle = get(ax, 'XLabel');
+    ylabelHandle = get(ax, 'YLabel');
+    titleHandle = get(ax, 'Title');
+
+    % Exclude axis labels and title from the list
+    textAnnotations = allTextObjects(~ismember(allTextObjects, [xlabelHandle, ylabelHandle, titleHandle]));
+
+    for i = 1:length(textAnnotations)
+        set(textAnnotations(i), 'FontSize', 15); % Set font size
+    end
+
+    for i = 1:length(textAnnotations)
+        pos = get(textAnnotations(i), 'Position');
+        
+        % Calculate relative position
+        relativeX = pos(1) / currentWidth;
+        relativeY = pos(2) / currentHeight;
+    
+        % Scale position according to new dimensions a and b
+        newPos = [relativeX * a, 0.85*relativeY * b, pos(3:end)]; % Keep the Z position and other dimensions (if any) unchanged
+        set(textAnnotations(i), 'Position', newPos);
+        
+    end
+
+    for i = 1:length(textAnnotations)
+        pos = get(textAnnotations(i), 'Position');
+
+        % Check if near the boundary and adjust font size
+        if pos(1) > a * 0.8 || pos(2) > b * 0.8 % Example condition
+            currentSize = get(textAnnotations(i), 'FontSize');
+            newSize = max(currentSize * 0.95, 8); % Reduce font size but not below 8
+            set(textAnnotations(i), 'FontSize', newSize);
+        end
+    end
+
+
+end
+
