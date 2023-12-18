@@ -1,10 +1,9 @@
-function adjustAxisProperties2(fig, a, b)
+function adjustAxisProperties2(fig, a, b, bg)
     % Adjust axis properties based on the type of plot in the figure
     % fig: Handle to the figure
     % a, b: Dimensions for box position
 
     % Set figure and axis units and background color
-    bg = 0.9 * [1, 1, 1]; % Background color
     set(fig, 'Units', 'inches', 'Color', 'w');
     ax = gca(fig); % Get current axes
     set(ax, 'Units', 'inches', 'Color', bg);
@@ -92,10 +91,10 @@ end
 
 function adjustGeneralPlotProperties(ax, bg, fig)
     % Set axis limits based on figure data
-    [x, y] = fig2data(fig);
-    xdata = cell2mat(x);
-    ydata = cell2mat(y);
-    set(gca(fig), 'XLim', [min(xdata) max(xdata)], 'YLim', [min(ydata) max(ydata)]);
+    plot_data = fig2data_(fig);
+    xdata = cell2mat(plot_data.x);
+    ydata = cell2mat(plot_data.y);
+    set(gca(fig), 'XLim', [min(xdata(:)) max(xdata(:))], 'YLim', [min(ydata(:)) max(ydata(:))]);
 
 %   Customizing major ticks
 %     numTicksX = 5; % Number of ticks on X-axis

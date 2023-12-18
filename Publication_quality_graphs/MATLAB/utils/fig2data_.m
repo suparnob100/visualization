@@ -48,9 +48,30 @@ for axIdx = 1:numAxes
         line = lines(lineIdx);
         plotData(axIdx).x{lineIdx} = get(line, 'XData');
         plotData(axIdx).y{lineIdx} = get(line, 'YData');
-        plotData(axIdx).lineStyle{lineIdx} = get(line, 'LineStyle');
-        plotData(axIdx).marker{lineIdx} = get(line, 'Marker');
-        plotData(axIdx).color{lineIdx} = get(line, 'Color');
+        
+        if ~isa(line, 'matlab.graphics.chart.primitive.Scatter')
+            plotData(axIdx).lineStyle{lineIdx} = get(line, 'LineStyle');
+        end
+        
+        % Check for marker property
+        if ~isa(line, 'matlab.graphics.chart.primitive.Area')
+            
+            marker = get(line, 'Marker');
+            if ~isempty(marker) && ~strcmp(marker, 'none')
+                plotData(axIdx).marker{lineIdx} = marker;
+            else
+                plotData(axIdx).marker{lineIdx} = 'None';
+            end
+        
+        end
+
+        % Check if the object is a line or scatter plot and get the color accordingly
+        if isa(line, 'matlab.graphics.chart.primitive.Line')
+            plotData(axIdx).color{lineIdx} = get(line, 'Color');
+        elseif isa(line, 'matlab.graphics.chart.primitive.Scatter')
+            plotData(axIdx).color{lineIdx} = get(line, 'MarkerEdgeColor');
+        end
+
     end
 
     % Extract axes labels and title
@@ -59,9 +80,9 @@ for axIdx = 1:numAxes
     plotData(axIdx).title = get(get(ax, 'Title'), 'String');
 
     % Handle legends
-    legendHandle = legend(ax);
-    if ~isempty(legendHandle)
-        plotData(axIdx).legends = {legendHandle.String};
+
+    if ~isempty(ax.Legend)
+        plotData(axIdx).legends = {ax.Legend.String};
     else
         plotData(axIdx).legends = {};
     end

@@ -43,6 +43,7 @@ function printfig_(varargin)
     defaultLegendOrientation = 0; % For horizontal: 1
     defaultChangeColor = 1;
     defaultPad = 0;
+    defaultBackgroundColor = 0.95*[1,1,1];
 
     % Define parameters
     addParameter(p, 'Select', defaultSelect);
@@ -55,6 +56,7 @@ function printfig_(varargin)
     addParameter(p, 'LegendOrientation', defaultLegendOrientation);
     addParameter(p, 'ChangeColor', defaultChangeColor);
     addParameter(p, 'Pad', defaultPad);
+    addParameter(p, 'BackgroundColor', defaultBackgroundColor)
 
     % Parse input arguments
     parse(p, varargin{:});
@@ -70,6 +72,7 @@ function printfig_(varargin)
     LegendOrientation = p.Results.LegendOrientation;
     ChangeColor = p.Results.ChangeColor;
     Pad = p.Results.Pad;
+    bg = p.Results.BackgroundColor;
 
 %  End of parsing inputs
 
@@ -78,14 +81,13 @@ function printfig_(varargin)
     addpath(Path+"/utils/")
     addpath(Path+"/utils/export_fig")
     addpath(Path+"/utils/matplotlib")
-
     
     if ~exist('FormatNumber','var')
         formats1 = getFormatInfo(); % Assume getFormats() returns formats1, formats2, and formats3
     else
         formats1 = FormatNumber;
     end
-        
+    
     [FileName, PathName, Filepath, frmt] = handleUserInput(Select, Figname, formats1);
 
     % Iterate through each file
@@ -94,7 +96,7 @@ function printfig_(varargin)
         fig = openFigure(Filepath, i);
         modifyFigureProperties(fig, Font, ChangeColor); % Adjust basic figure properties like color
         adjustLineAndMarkerProperties(fig);     % Adjust line and marker properties
-        adjustAxisProperties2(fig, L, W);    % Adjust axis properties
+        adjustAxisProperties2(fig, L, W, bg);    % Adjust axis properties
         adjustLegend(fig, AdjustLegend, LegendOrientation, Pad);       % Adjust legend properties
         printOutput(fig, FileName, PathName, frmt, i);    % Print or save the figure
     end

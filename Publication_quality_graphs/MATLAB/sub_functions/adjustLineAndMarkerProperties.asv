@@ -22,9 +22,8 @@ function adjustLineAndMarkerProperties(fig)
             set(line, 'LineWidth', 3)
             
         else
-            set(line, 'LineWidth', 3);
-            set(line, 'FaceColor', magma(i))
-            set(line, 'EdgeColor', magma(i)*0.98)
+            set(line, 'FaceColor', magma(1))
+            set(line, 'EdgeColor', magma(1))
         end
 
         % Check if the line has a marker, and adjust marker properties if it does
