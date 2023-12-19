@@ -1,35 +1,33 @@
 function printfig_(varargin)
-
-    %PRINTFIG_ Create and modify a figure with specified properties.
+    %% PRINTFIG_ generates and customizes figures based on specified properties. WORKS FOR LINE PLOTS, HISTOGRAMS, AREA, AND SCATTER PLOTS.
+    %
+    % This function creates a figure using name-value pair arguments. It allows
+    % extensive customization of the figure's appearance, including dimensions,
+    % font, legend orientation, and color settings. It also provides options for
+    % saving the figure in various formats.
     %
     % Syntax:
     %   printfig_('Name', Value, ...)
     %
-    % Description:
-    %   printfig_ creates a figure based on name-value pairs that define the 
-    %   figure's properties and behavior. It allows customization of the figure's
-    %   appearance and format.
-    %
     % Inputs:
-    %   Select - Selection flag (default: 1)
-    %   Figname - Name of the figure (default: 'figure1')
-    %   FormatNumber - Format number for saving the figure (default: 1)
-    %   AdjustLegend - Flag to adjust the legend (default: false)
-    %   Font - Font size for the figure text (default: 12)
-    %   L - Length of the figure (default: 10)
-    %   W - Width of the figure (default: 10)
-    %   LegendOrientation - Orientation of the legend ('vertical' or 'horizontal')
-    %                         (default: 'vertical')
-    %   ChangeColor - Flag to change color (default: 1)
-    %   Pad - Padding around the figure (default: 0)
+    %   Select (numeric): Selection flag for manual or automatic selection
+    %                     (default: 1 for manual selection).
+    %   Figname (string): Name of the figure. Defaults to 'figure1' if select is 0.
+    %   FormatNumber (numeric): Format number for saving the figure (default: 1).
+    %   AdjustLegend (numeric): Flag for legend adjustment (1: down, 2: up; default: 2).
+    %   Font (numeric): Font size for figure text (default: 20).
+    %   L (numeric): Length of the figure (default: 5).
+    %   W (numeric): Width of the figure (default: 4).
+    %   LegendOrientation (numeric): Orientation of the legend (0 for vertical, 1 for horizontal; default: 0).
+    %   ChangeColor (numeric): Flag to change color (default: 1).
+    %   Pad (numeric): Padding around the figure (default: 0).
+    %   BackgroundColor (vector): Background color of the figure (default: light grey).
     %
     % Example:
-    %   printfig_('Font', 14, 'Figname', 'MyCustomFigure')
-    %
-    % See also: inputParser
-
+    %   printfig_('Font', 14, 'L',5, 'W', 4)
+    
+    %%
     close all
-    % Create an input parser instance
     p = inputParser;
 
     % Define default values
@@ -37,7 +35,7 @@ function printfig_(varargin)
     defaultFigname = [];
 %     defaultFormatNumber = [];
     defaultAdjustLegend = 2; %1:down, 2:up.
-    defaultFont = 25;
+    defaultFont = 20;
     defaultL = 5;
     defaultW = 4;
     defaultLegendOrientation = 0; % For horizontal: 1
@@ -45,7 +43,7 @@ function printfig_(varargin)
     defaultPad = 0;
     defaultBackgroundColor = 0.95*[1,1,1];
 
-    % Define parameters
+    %% Define parameters
     addParameter(p, 'Select', defaultSelect);
     addParameter(p, 'Figname', defaultFigname);
 %     addParameter(p, 'FormatNumber', defaultFormatNumber);
@@ -58,7 +56,7 @@ function printfig_(varargin)
     addParameter(p, 'Pad', defaultPad);
     addParameter(p, 'BackgroundColor', defaultBackgroundColor)
 
-    % Parse input arguments
+    %% Parse input arguments
     parse(p, varargin{:});
 
     % Extract variables after parsing
@@ -74,8 +72,7 @@ function printfig_(varargin)
     Pad = p.Results.Pad;
     bg = p.Results.BackgroundColor;
 
-%  End of parsing inputs
-
+%%  
     Path = fileparts(mfilename('fullpath'));
     addpath(Path+"/sub_functions/")
     addpath(Path+"/utils/")
@@ -100,4 +97,5 @@ function printfig_(varargin)
         adjustLegend(fig, AdjustLegend, LegendOrientation, Pad);       % Adjust legend properties
         printOutput(fig, FileName, PathName, frmt, i);    % Print or save the figure
     end
+    
 end
