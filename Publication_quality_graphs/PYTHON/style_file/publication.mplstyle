@@ -1,0 +1,77 @@
+# Custom Matplotlib Style Sheet (custom_style.mplstyle)
+
+## Font properties
+font.size : 20              # General font size
+axes.labelsize : 20         # Font size for axis labels
+axes.titlesize : 20         # Font size for axis titles
+legend.fontsize : 20        # Font size for legend
+xtick.labelsize : 20        # Font size for x-axis tick labels
+ytick.labelsize : 20        # Font size for y-axis tick labels
+font.family : STIXGeneral
+
+
+## Use LaTeX for math formatting
+text.usetex : True
+text.latex.preamble : \usepackage{amsmath} \usepackage{amssymb}
+
+## Figure properties
+figure.edgecolor : black
+figure.facecolor : white
+figure.dpi : 100
+
+## Axes properties
+axes.facecolor : [0.92,0.92,0.92]
+axes.ymargin : 0.1
+axes.linewidth : 1.5
+axes.spines.right : False
+axes.spines.top : False
+
+# Default: color-blind and photocopy friendly but only three-lines
+axes.prop_cycle : cycler('color', ['e66101','5e3c99','fdb863'])
+
+## Line properties
+lines.linewidth : 2.5
+lines.markersize : 6
+
+## Legend properties
+legend.frameon : True
+legend.edgecolor : 0.9
+legend.framealpha : 0.2
+
+## Grid properties
+axes.grid : True
+grid.color : [1,1,1]
+grid.linewidth : 2
+
+## Tick properties (X-axis)
+xtick.alignment : center
+xtick.color : black
+xtick.direction : out
+xtick.minor.top : False
+xtick.minor.bottom : True
+xtick.minor.visible : True
+xtick.minor.size : 3.0
+xtick.minor.width : 0.75
+xtick.major.bottom : True
+xtick.major.size : 6.0
+xtick.major.top : False
+xtick.major.width : 0.95
+
+## Tick properties (Y-axis)
+ytick.alignment : center_baseline
+ytick.color : black
+ytick.direction : out
+ytick.labelleft : True
+ytick.major.left : True
+ytick.major.pad : 3.5
+ytick.major.size : 6.0
+ytick.major.width : 0.95
+ytick.minor.left : True
+ytick.minor.pad : 3.4
+ytick.minor.size : 3.0
+ytick.minor.visible : True
+ytick.minor.width : 0.75
+
+## Always save as 'tight'
+savefig.bbox : tight
+savefig.pad_inches : 0.05
