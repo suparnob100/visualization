@@ -20,7 +20,7 @@ figure.facecolor : white
 figure.dpi : 200
 
 ## Axes properties
-axes.facecolor : [0.92,0.92,0.92]
+axes.facecolor : [0.95,0.95,0.95]
 axes.ymargin : 0.1
 axes.linewidth : 1.5
 axes.spines.right : False
