@@ -22,7 +22,7 @@ figure.dpi : 200
 ## Axes properties
 axes.facecolor : [0.95,0.95,0.95]
 axes.ymargin : 0.1
-axes.linewidth : 0.95
+axes.linewidth : 0.5
 axes.spines.right : False
 axes.spines.top : False
 
@@ -55,7 +55,7 @@ xtick.minor.width : 0.75
 xtick.major.bottom : True
 xtick.major.size : 6.0
 xtick.major.top : False
-xtick.major.width : 0.95
+xtick.major.width : 0.5
 
 ## Tick properties (Y-axis)
 ytick.alignment : center_baseline
@@ -70,7 +70,7 @@ ytick.minor.left : False
 ytick.minor.pad : 3.4
 ytick.minor.size : 3.0
 ytick.minor.visible : True
-ytick.minor.width : 0.75
+ytick.minor.width : 0.5
 
 ## Always save as 'tight'
 savefig.bbox : tight
