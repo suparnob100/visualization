@@ -12,24 +12,37 @@ font.family : STIXGeneral
 
 ## Use LaTeX for math formatting
 text.usetex : True
-text.latex.preamble : \usepackage{amsmath} \usepackage{amssymb}
+text.latex.preamble : \usepackage{amsmath} \usepackage{amssymb} #\usepackage{sfmath}
+
+
+# Set fonts to be LaTeX defaults when you don't have latex installed
+text.usetex : False
+font.serif : cmr10, Computer Modern Serif, DejaVu Serif
+font.family : serif
+axes.formatter.use_mathtext : True
+mathtext.fontset : cm
+
 
 ## Figure properties
 figure.edgecolor : black
 figure.facecolor : white
 figure.dpi : 200
 
+
 ## Axes properties
 axes.facecolor : [0.95,0.95,0.95]
 axes.linewidth : 0.5
 axes.spines.right : False
 axes.spines.top : False
-axes.xmargin : 0.01  # 1% margin on the x-axis
-axes.ymargin : 0.01  # 1% margin on the y-axis
+axes.xmargin : 0.5  # 1% margin on the x-axis
+axes.ymargin : 0.5  # 1% margin on the y-axis
 
 
-# Default: color-blind and photocopy friendly but only three-lines
+## Default: color-blind and photocopy friendly but only three-lines
 axes.prop_cycle : cycler('color', ['e66101','5e3c99','fdb863'])
+
+## Only Scatter plot
+# axes.prop_cycle : (cycler('marker', ['o', 's', '^', 'v', '<', '>', 'd']) +  cycler('ls', [' ', ' ', ' ', ' ', ' ', ' ', ' ']))
 
 ## Line properties
 lines.linewidth : 2.5
@@ -37,13 +50,20 @@ lines.markersize : 6
 
 ## Legend properties
 legend.frameon : True
+legend.fancybox : True
 legend.edgecolor : 0.9
 legend.framealpha : 0.2
+legend.numpoints : 1
+
 
 ## Grid properties
 axes.grid : True
 grid.color : [1,1,1]
 grid.linewidth : 1.0
+grid.alpha : 1.0
+#grid.linestyle : --
+axes.axisbelow : True
+
 
 ## Tick properties (X-axis)
 xtick.alignment : center
@@ -76,4 +96,4 @@ ytick.minor.width : 0.5
 
 ## Always save as 'tight'
 savefig.bbox : tight
-savefig.pad_inches : 0.05
+savefig.pad_inches : 0.01
