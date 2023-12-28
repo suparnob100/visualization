@@ -22,7 +22,7 @@ figure.dpi : 200
 ## Axes properties
 axes.facecolor : [0.95,0.95,0.95]
 axes.ymargin : 0.1
-axes.linewidth : 1.0
+axes.linewidth : 0.95
 axes.spines.right : False
 axes.spines.top : False
 
