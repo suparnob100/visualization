@@ -41,7 +41,7 @@ legend.framealpha : 0.2
 ## Grid properties
 axes.grid : True
 grid.color : [1,1,1]
-grid.linewidth : 1
+grid.linewidth : 0.5
 
 ## Tick properties (X-axis)
 xtick.alignment : center
