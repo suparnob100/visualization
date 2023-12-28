@@ -41,14 +41,14 @@ legend.framealpha : 0.2
 ## Grid properties
 axes.grid : True
 grid.color : [1,1,1]
-grid.linewidth : 2
+grid.linewidth : 1
 
 ## Tick properties (X-axis)
 xtick.alignment : center
 xtick.color : black
 xtick.direction : out
 xtick.minor.top : False
-xtick.minor.bottom : True
+xtick.minor.bottom : False
 xtick.minor.visible : True
 xtick.minor.size : 3.0
 xtick.minor.width : 0.75
@@ -66,7 +66,7 @@ ytick.major.left : True
 ytick.major.pad : 3.5
 ytick.major.size : 6.0
 ytick.major.width : 0.95
-ytick.minor.left : True
+ytick.minor.left : False
 ytick.minor.pad : 3.4
 ytick.minor.size : 3.0
 ytick.minor.visible : True
