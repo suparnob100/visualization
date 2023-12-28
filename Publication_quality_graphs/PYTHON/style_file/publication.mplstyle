@@ -14,7 +14,6 @@ font.family : STIXGeneral
 text.usetex : True
 text.latex.preamble : \usepackage{amsmath} \usepackage{amssymb} #\usepackage{sfmath}
 
-
 # Set fonts to be LaTeX defaults when you don't have latex installed
 text.usetex : False
 font.serif : cmr10, Computer Modern Serif, DejaVu Serif
