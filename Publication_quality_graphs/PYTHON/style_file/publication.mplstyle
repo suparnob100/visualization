@@ -21,10 +21,12 @@ figure.dpi : 200
 
 ## Axes properties
 axes.facecolor : [0.95,0.95,0.95]
-axes.ymargin : 0.1
 axes.linewidth : 0.5
 axes.spines.right : False
 axes.spines.top : False
+axes.xmargin : 0.01  # 1% margin on the x-axis
+axes.ymargin : 0.01  # 1% margin on the y-axis
+
 
 # Default: color-blind and photocopy friendly but only three-lines
 axes.prop_cycle : cycler('color', ['e66101','5e3c99','fdb863'])
@@ -41,7 +43,7 @@ legend.framealpha : 0.2
 ## Grid properties
 axes.grid : True
 grid.color : [1,1,1]
-grid.linewidth : 0.5
+grid.linewidth : 1.0
 
 ## Tick properties (X-axis)
 xtick.alignment : center
