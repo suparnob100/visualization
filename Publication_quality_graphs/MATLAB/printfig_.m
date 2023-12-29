@@ -79,6 +79,11 @@ function printfig_(varargin)
     addpath(Path+"/utils/export_fig")
     addpath(Path+"/utils/matplotlib")
     
+    set(0,'defaulttextinterpreter','latex')
+    set(0,'DefaultTextFontname', 'CMU Serif')
+    set(0,'DefaultAxesFontName', 'CMU Serif')
+   
+    
     if ~exist('FormatNumber','var')
         formats1 = getFormatInfo(); % Assume getFormats() returns formats1, formats2, and formats3
     else
