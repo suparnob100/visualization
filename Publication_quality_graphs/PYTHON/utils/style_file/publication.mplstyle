@@ -7,17 +7,16 @@ axes.titlesize : 20         # Font size for axis titles
 legend.fontsize : 20        # Font size for legend
 xtick.labelsize : 20        # Font size for x-axis tick labels
 ytick.labelsize : 20        # Font size for y-axis tick labels
-font.family : STIXGeneral
 
 
 ## Use LaTeX for math formatting
-text.usetex : True
-text.latex.preamble : \usepackage{amsmath} \usepackage{amssymb} #\usepackage{sfmath}
+#text.usetex : True
+#text.latex.preamble : \usepackage{amsmath} \usepackage{amssymb} #\usepackage{sfmath}
 
 # Set fonts to be LaTeX defaults when you don't have latex installed
 text.usetex : False
 font.serif : cmr10, Computer Modern Serif, DejaVu Serif
-font.family : serif
+font.family : serif #STIXGeneral
 axes.formatter.use_mathtext : True
 mathtext.fontset : cm
 
