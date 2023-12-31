@@ -109,11 +109,11 @@ function adjustGeneralPlotProperties(ax, bg, fig)
     end
     
     if y_int_ticks == 1
-        yticks(floor(linspace(min(ydata), max(ydata), length(yticks)+1)))
+        yticks(floor(linspace(min(min(ydata)), max(max(ydata)), length(yticks)+1)))
     end
 
     if x_int_ticks == 1
-        xticks(floor(linspace(min(xdata), max(xdata), length(xticks)+1)))
+        xticks(floor(linspace(min(min(xdata)), max(max(xdata)), length(xticks)+1)))
     end
     
     % Customizing tick labels

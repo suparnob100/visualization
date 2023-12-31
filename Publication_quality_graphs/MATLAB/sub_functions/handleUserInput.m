@@ -24,7 +24,8 @@ function [FileName, PathName, Filepath, frmt] = handleUserInput(select, figname,
             Filepath0 = openfig(figname);
             Filepath = Filepath0.FileName;
             [PathName, FileName] = fileparts(Filepath);
+            PathName = strcat(PathName,'\');
         end
-        frmt = []; % Format is not required for this option
+        frmt = formats1;
     end
 end

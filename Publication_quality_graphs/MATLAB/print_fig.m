@@ -1,4 +1,4 @@
-function printfig_(varargin)
+function print_fig(varargin)
     %% PRINTFIG_ generates and customizes figures based on specified properties. WORKS FOR LINE PLOTS, HISTOGRAMS, AREA, AND SCATTER PLOTS.
     %
     % This function creates a figure using name-value pair arguments. It allows
@@ -10,9 +10,6 @@ function printfig_(varargin)
     %   printfig_('Name', Value, ...)
     %
     % Inputs:
-    %   Select (numeric): Selection flag for manual or automatic selection
-    %                     (default: 1 for manual selection).
-    %   Figname (string): Name of the figure. Defaults to 'figure1' if select is 0.
     %   FormatNumber (numeric): Format number for saving the figure (default: 1).
     %   AdjustLegend (numeric): Flag for legend adjustment (1: down, 2: up; default: 2).
     %   Font (numeric): Font size for figure text (default: 20).
@@ -29,11 +26,10 @@ function printfig_(varargin)
     %%
     close all
     p = inputParser;
-
+    
     % Define default values
-    defaultSelect = 1;
     defaultFigname = [];
-%     defaultFormatNumber = [];
+    defaultFormatNumber = 0;
     defaultAdjustLegend = 2; %1:down, 2:up.
     defaultFont = 20;
     defaultL = 5;
@@ -44,9 +40,8 @@ function printfig_(varargin)
     defaultBackgroundColor = 0.95*[1,1,1];
 
     %% Define parameters
-    addParameter(p, 'Select', defaultSelect);
     addParameter(p, 'Figname', defaultFigname);
-%     addParameter(p, 'FormatNumber', defaultFormatNumber);
+    addParameter(p, 'FormatNumber', defaultFormatNumber);
     addParameter(p, 'AdjustLegend', defaultAdjustLegend);
     addParameter(p, 'Font', defaultFont);
     addParameter(p, 'L', defaultL);
@@ -60,9 +55,8 @@ function printfig_(varargin)
     parse(p, varargin{:});
 
     % Extract variables after parsing
-    Select = p.Results.Select;
     Figname = p.Results.Figname;
-%     FormatNumber = p.Results.FormatNumber;
+    FormatNumber = p.Results.FormatNumber;
     AdjustLegend = p.Results.AdjustLegend;
     Font = p.Results.Font;
     L = p.Results.L;
@@ -84,16 +78,23 @@ function printfig_(varargin)
     set(0,'DefaultAxesFontName', 'CMU Serif')
    
     
-    if ~exist('FormatNumber','var')
+    if (FormatNumber == 0)
         formats1 = getFormatInfo(); % Assume getFormats() returns formats1, formats2, and formats3
     else
         formats1 = FormatNumber;
+    end
+    
+    if isempty(Figname)
+        Select = 1;
+    else
+        Select = 0
     end
     
     [FileName, PathName, Filepath, frmt] = handleUserInput(Select, Figname, formats1);
 
     % Iterate through each file
     N = determineNumberOfFiles(FileName);
+    
     for i = 1:N
         fig = openFigure(Filepath, i);
         modifyFigureProperties(fig, Font, ChangeColor); % Adjust basic figure properties like color
