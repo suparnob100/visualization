@@ -30,7 +30,7 @@ function print_fig(varargin)
     % Define default values
     defaultFigname = [];
     defaultFormatNumber = 0;
-    defaultAdjustLegend = 2; %1:down, 2:up.
+    defaultAdjustLegend = []; %1:down, 2:up.
     defaultFont = 20;
     defaultL = 5;
     defaultW = 4;
@@ -87,7 +87,7 @@ function print_fig(varargin)
     if isempty(Figname)
         Select = 1;
     else
-        Select = 0
+        Select = 0;
     end
     
     [FileName, PathName, Filepath, frmt] = handleUserInput(Select, Figname, formats1);
@@ -100,7 +100,7 @@ function print_fig(varargin)
         modifyFigureProperties(fig, Font, ChangeColor); % Adjust basic figure properties like color
         adjustLineAndMarkerProperties(fig);     % Adjust line and marker properties
         adjustAxisProperties2(fig, L, W, bg);    % Adjust axis properties
-        adjustLegend(fig, AdjustLegend, LegendOrientation, Pad);       % Adjust legend properties
+        adjustLegendTick(fig, AdjustLegend, LegendOrientation, Pad);       % Adjust legend properties
         printOutput(fig, FileName, PathName, frmt, i);    % Print or save the figure
     end
     

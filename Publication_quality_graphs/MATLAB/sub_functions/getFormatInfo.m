@@ -27,16 +27,16 @@ function [formatExt, formatSpecifier] = getFormatInfo(formatNumber)
         20, '.ppm', '-dppmraw';      % PPM raw format
         21, '.pdf', '-dpdf';         % PDF format
         22, '.eps', '-deps';         % EPS format
-        23, '.eps', '-depsc';        % EPS color format
-        24, '.eps', '-deps2';        % EPS Level 2 format
-        25, '.eps', '-depsc2';       % EPS Level 2 color format
-        26, '.emf', '-dmeta';        % EMF format again
-        27, '.svg', '-dsvg';         % SVG format
-        28, '.ps', '-dps';           % PostScript format
-        29, '.ps', '-dpsc';          % PostScript color format
-        30, '.ps', '-dps2';          % PostScript Level 2 format
-        31, '.ps', '-dpsc2';         % PostScript Level 2 color format
-        32, '.fig', 'fig';           % MATLAB figure format
+%         23, '.eps', '-depsc';        % EPS color format
+%         24, '.eps', '-deps2';        % EPS Level 2 format
+%         25, '.eps', '-depsc2';       % EPS Level 2 color format
+        23, '.emf', '-dmeta';        % EMF format again
+        24, '.svg', '-dsvg';         % SVG format
+%         25, '.ps', '-dps';           % PostScript format
+%         29, '.ps', '-dpsc';          % PostScript color format
+%         30, '.ps', '-dps2';          % PostScript Level 2 format
+%         31, '.ps', '-dpsc2';         % PostScript Level 2 color format
+        25, '.fig', 'fig';           % MATLAB figure format
     };
 
     if(nargin<1)

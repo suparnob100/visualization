@@ -54,7 +54,7 @@ for axIdx = 1:numAxes
         end
         
         % Check for marker property
-        if ~isa(line, 'matlab.graphics.chart.primitive.Area')
+        if (~isa(line, 'matlab.graphics.chart.primitive.Area') * ~isa(line, 'matlab.graphics.chart.primitive.bar'))
             
             marker = get(line, 'Marker');
             if ~isempty(marker) && ~strcmp(marker, 'none')

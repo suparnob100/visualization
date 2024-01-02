@@ -7,7 +7,17 @@ function adjustAxisProperties2(fig, a, b, bg)
     set(fig, 'Units', 'inches', 'Color', 'w');
     ax = gca(fig); % Get current axes
     set(ax, 'Units', 'inches', 'Color', bg);
-
+    
+    % Adjust the position and size of the axes
+    if ~isempty(a) && ~isempty(b)
+        BoxPos = [1, 1, a, b];
+    else
+        BoxPos = [1, 1, 5, 4]; % Default size
+    end
+    
+    adjustAnnotation(ax,a,b)
+    set(ax, 'Position', BoxPos);
+    
     % Check the type of the primary plot in the figure
     primaryPlot = get(ax, 'Children');
     
@@ -27,15 +37,6 @@ function adjustAxisProperties2(fig, a, b, bg)
         warning('No plot found in the figure.');
     end
 
-    % Adjust the position and size of the axes
-    if ~isempty(a) && ~isempty(b)
-        BoxPos = [1, 1, a, b];
-    else
-        BoxPos = [1, 1, 5, 4]; % Default size
-    end
-    
-    adjustAnnotation(ax,a,b)
-    set(ax, 'Position', BoxPos);
     adjustFigurePosition(fig, BoxPos);
 
 end
@@ -44,10 +45,10 @@ function adjustHistogramProperties(ax, bg, fig)
     % Adjust properties for a histogram
     hHist = findobj(fig, 'Type', 'histogram');
     h = hHist(1);
-    h.BinWidth = 2;
+%     h.BinWidth = 2;
 %     h.Normalization = 'probability';
     h.FaceColor = magma(1);
-    h.EdgeColor = 'k';
+    h.EdgeColor = h.FaceColor;
     h.FaceAlpha = 1.0;
     set(ax, 'XGrid', 'on', 'YGrid', 'on', 'GridColor', 'w', 'GridLineStyle', '-', 'LineWidth', 1);
     set(ax, 'Box', 'off', 'XColor', 'k', 'YColor', 'k');
@@ -90,36 +91,7 @@ function adjustBarChartProperties(ax, bg, fig)
 end
 
 function adjustGeneralPlotProperties(ax, bg, fig)
-    % Set axis limits based on figure data
-    plot_data = fig2data_(fig);
-    xdata = cell2mat(plot_data.x);
-    ydata = cell2mat(plot_data.y);
-    set(gca(fig), 'XLim', [min(xdata(:)) max(xdata(:))], 'YLim', [min(ydata(:)) max(ydata(:))]);
-    x_int_ticks = 1;
-    y_int_ticks = 0;
-    
-    if length(yticks)>5
-        numTicksY = 5; % Number of ticks on Y-axis
-        yticks(linspace(min(ydata), max(ydata), numTicksY)) 
-    end
-    
-    if length(xticks)>5
-        numTicksX = 5; % Number of ticks on Y-axis
-        xticks(linspace(min(xdata), max(xdata), numTicksX)) 
-    end
-    
-    if y_int_ticks == 1
-        yticks(floor(linspace(min(min(ydata)), max(max(ydata)), length(yticks)+1)))
-    end
-
-    if x_int_ticks == 1
-        xticks(floor(linspace(min(min(xdata)), max(max(xdata)), length(xticks)+1)))
-    end
-    
-    % Customizing tick labels
-    set(ax, 'XTickLabel', arrayfun(@(x) sprintf('%.1f', x), get(ax, 'XTick'), 'UniformOutput', false));
-    set(ax, 'YTickLabel', arrayfun(@(y) sprintf('%.1f', y), get(ax, 'YTick'), 'UniformOutput', false));
-
+ 
     % Enabling minor ticks
     set(ax, 'XMinorTick', 'off', 'YMinorTick', 'off');
 

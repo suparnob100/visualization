@@ -15,17 +15,17 @@ function printOutput(fig, FileName, PathName, frmt, i)
     % Iterate through each specified format
     for j = 1:length(frmt)
         % Determine the format extension and format specifier
-        [~, formatSpecifier] = getFormatInfo(frmt(j));
-
+        [formatExt, formatSpecifier] = getFormatInfo(frmt(j));
   
         % Save or print the figure based on the format
         switch formatSpecifier
             case 'fig'
                 % Save as MATLAB figure
                 savefig(fig, strcat(PathName,currentFileName));
-            case '-dpdf'
-                % Save as PDF
-                export_fig(strcat(PathName,currentFileName)+".pdf", '-q101','-transparent','-painters');
+                
+            case {'-dpdf','-deps','-dsvg','-dpng','-dtiff','-dtiffn','-djpg', '-dbmp', '-dbmp16m', '-dbmp256'}
+                export_fig(strcat(PathName,currentFileName,formatExt), '-q101','-transparent','-painters');
+                
             otherwise
                 % Print using the specified format
                 print(fig,  formatSpecifier, strcat(PathName,currentFileName));
