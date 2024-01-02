@@ -31,7 +31,13 @@ def fig2py(filename):
     
     filename = filename+'.fig'
     d_contents = loadmat(filename)
-    ax_children = d_contents['hgS_070000']['children'][0,0]['children'][0,0]
+    ax_children = d_contents['hgS_070000']['children'][0,0]
+    
+    if len(ax_children)>1:
+        ax_children=ax_children['children'][1,0]
+    else:
+        ax_children=ax_children['children'][0,0]
+
     plot_data = extract_plot_data(ax_children)
     
     return plot_data
