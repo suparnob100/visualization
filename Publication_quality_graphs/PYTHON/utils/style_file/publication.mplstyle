@@ -50,7 +50,7 @@ lines.markersize : 6
 legend.frameon : True
 legend.fancybox : True
 legend.edgecolor : 0.9
-legend.framealpha : 0.2
+legend.framealpha : 0.0
 legend.numpoints : 1
 
 
