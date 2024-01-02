@@ -89,10 +89,11 @@ function adjustLegendTick(fig, oll, ori, pad)
         end
 
         if x_int_ticks == 1
-            xticks(floor(linspace(xLimits), max(xLimits), length(xticks)+1))
+            xticks(floor(linspace(min(xLimits), max(xLimits), length(xticks)+1)))
         end
-        
-        set(axesHandle, 'XTickLabel', arrayfun(@(x) sprintf('%.1f', x), get(axesHandle, 'XTick'), 'UniformOutput', false));
+        if (~strcmp(axesHandle.XScale, 'log'))*(max(xLimits)<1000)
+            set(axesHandle, 'XTickLabel', arrayfun(@(x) sprintf('%.1f', x), get(axesHandle, 'XTick'), 'UniformOutput', false));
+        end
     end
 
     %% ytick modification
@@ -109,7 +110,22 @@ function adjustLegendTick(fig, oll, ori, pad)
         yticks(floor(linspace(min(yLimits), max(yLimits), length(yticks)+1)))
     end
     
-    set(axesHandle, 'YTickLabel', arrayfun(@(y) sprintf('%.1f', y), get(axesHandle, 'YTick'), 'UniformOutput', false));
+    if (~strcmp(axesHandle.YScale, 'log'))*(max(yLimits)<1000)
+        set(axesHandle, 'YTickLabel', arrayfun(@(y) sprintf('%.1f', y), get(axesHandle, 'YTick'), 'UniformOutput', false));
+    end
 
     
+end
+
+function n = O( val, base)
+
+%Order of magnitude of number for specified base. Default base is 10.
+%order(0.002) will return -3., order(1.3e6) will return 6.
+%Author Ivar Smith
+
+if nargin < 2
+    base = 10;
+end
+n = floor(log(abs(val))./log(base));
+
 end
