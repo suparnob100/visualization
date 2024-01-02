@@ -41,9 +41,8 @@ function adjustLegendTick(fig, oll, ori, pad)
         % Adjust legend position based on oll value
         if ~isempty(oll)
             % Get current legend and axes positions
-            lH = legendHandle;
-            lH.Units='inches';
-            legendPos = get(lH, 'Position');
+            legendHandle.Units='inches';
+            legendPos = get(legendHandle, 'Position');
             axesPos = get(axesHandle, 'Position');
 
             legendBoxH = legendPos(4);
@@ -65,11 +64,12 @@ function adjustLegendTick(fig, oll, ori, pad)
 
             end
             
-            lH.Units='normalized';
-            set(lH,'color','none');
-            legend boxoff
+            legendHandle.Units='normalized';
 
         end
+        
+        set(legendHandle,'color','none');
+        legend boxoff
         
     end
 
@@ -83,14 +83,15 @@ function adjustLegendTick(fig, oll, ori, pad)
         x_int_ticks = 0;
         xLimits = get(axesHandle, 'XLim');
 
-        %     if length(xticks)>5
+        if length(xticks)>5
         numTicksX = 5; % Number of ticks on Y-axis
         xticks(linspace(min(xLimits), max(xLimits), numTicksX))
+        end
 
         if x_int_ticks == 1
             xticks(floor(linspace(xLimits), max(xLimits), length(xticks)+1))
         end
-    %     end
+        
         set(axesHandle, 'XTickLabel', arrayfun(@(x) sprintf('%.1f', x), get(axesHandle, 'XTick'), 'UniformOutput', false));
     end
 
@@ -99,10 +100,10 @@ function adjustLegendTick(fig, oll, ori, pad)
     y_int_ticks = 0;
     yLimits = get(axesHandle, 'YLim');
 
-%     if length(yticks)>5
+    if length(yticks)>5
     numTicksY = 5; % Number of ticks on Y-axis
     yticks(linspace(min(yLimits), max(yLimits), numTicksY)) 
-%     end
+    end
 
     if y_int_ticks == 1
         yticks(floor(linspace(min(yLimits), max(yLimits), length(yticks)+1)))
