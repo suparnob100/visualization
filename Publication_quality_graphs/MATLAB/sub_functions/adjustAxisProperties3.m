@@ -32,78 +32,11 @@ function adjustAxisProperties3(fig, a, b)
     adjustAnnotation(ax,a,b)
     set(ax, 'Position', BoxPos);
     
-    % Check the type of the primary plot in the figure
-    primaryPlot = get(ax, 'Children');
-    
-    if ~isempty(primaryPlot)
-        plotType = class(primaryPlot(end));
-
-        if strcmp(plotType, 'matlab.graphics.primitive.Patch')
-            % Adjust properties specific to histograms
-            adjustHistogramProperties(fig, styleSettings);
-        elseif strcmp(plotType, 'matlab.graphics.chart.primitive.Bar')
-            % Adjust properties specific to bar charts
-            adjustBarChartProperties(fig)
-        end
-    else
-        warning('No plot found in the figure.');
-    end
 
     adjustFigurePosition(fig, BoxPos);
 
 end
 
-
-function adjustHistogramProperties(fig, styleSettings)
-    % Adjust properties for a histogram
-    hHist = findobj(fig, 'Type', 'Patch');
-    if isempty(hHist)
-        warning('No histogram found in the figure.');
-        return;
-    end
-    h = hHist(1);
-    % Apply style settings to histogram
-%     h.FaceColor = clr;
-%     h.EdgeColor = styleSettings.Histogram.EdgeColor;
-    h.FaceAlpha = styleSettings.Histogram.FaceAlpha;
-    % h.BinWidth = styleSettings.Histogram.BinWidth; % Uncomment if needed
-    % h.Normalization = styleSettings.Histogram.Normalization; % Uncomment if needed
-
-    % Additional histogram-specific adjustments can be added here
-end
-
-
-
-function adjustBarChartProperties(fig)
-    % Adjust properties for a bar chart
-    styleSettings = mPlotStyle();
-
-        
-    hBar = findobj(fig, 'Type', 'Bar');
-    if isempty(hBar)
-        disp('No bar chart found in the figure.');
-        return;
-    end
-    
-    % Determine if it's a single bar chart or grouped bar chart
-    if size(hBar(1).YData, 1) == 1
-        % Single bar chart
-        numBars = numel(hBar.YData); % Number of bars
-        cmap = styleSettings.BarChart.Colormap(numBars); % Replace 'jet' with your desired colormap
-        hBar.CData = cmap;
-    else
-        % Grouped bar chart
-        numGroups = size(hBar(1).YData, 2); % Number of groups
-        numBars = numel(hBar); % Number of bars in each group
-
-        for i = 1:numBars
-            cmap = styleSettings.BarChart.Colormap(numGroups); % Replace 'jet' with your desired colormap
-            hBar(i).CData = cmap;
-        end
-    end
-
-    % Additional bar chart-specific adjustments can be added here
-end
 
 function adjustFigurePosition(fig, BoxPos)
     % Adjust the position of the figure on the screen

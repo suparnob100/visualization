@@ -33,8 +33,8 @@ function adjustLineAndMarkerProperties2(fig)
             else
                 % Apply general line adjustments
                 set(line, 'LineWidth', styleSettings.LineProperties.LineWidth);
-                set(line, 'FaceColor', clr(i,:));
-                set(line, 'EdgeColor', clr(i,:)*0.98);
+%                 set(line, 'FaceColor', clr(i,:));
+%                 set(line, 'EdgeColor', clr(i,:)*0.98);
             end
         end
     end

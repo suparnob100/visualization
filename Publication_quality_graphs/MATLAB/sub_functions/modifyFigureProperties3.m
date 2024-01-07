@@ -1,0 +1,83 @@
+function modifyFigureProperties3(fig)
+    % Function to modify properties of a figure
+    % fig: handle to the figure
+    % styleSettings: structure with style settings
+    
+    styleSettings = mPlotStyle();
+
+
+    % Set font size for all axes in the figure
+    axesInFig = findobj(fig, 'Type', 'axes');
+    for ax = axesInFig'
+        set(ax, 'FontSize', styleSettings.General.FontSize);
+    end
+
+    % Modify line and plot colors if the flag is set
+    if styleSettings.FigureProperties.ChangeColor
+        modifyLineAndPlotColors(fig, styleSettings);
+    end
+end
+
+function modifyLineAndPlotColors(fig, styleSettings)
+    % Modify colors for lines and apply adjustments for histograms and bar charts
+    lines = findobj(fig, 'Type', 'line');
+    applyLineColor(lines, styleSettings.FigureProperties.ColorMap);
+
+    ax = findobj(fig, 'Type', 'axes');
+    for a = 1:length(ax)
+        primaryPlot = get(ax(a), 'Children');
+        if ~isempty(primaryPlot)
+            plotType = class(primaryPlot(end));
+
+            if strcmp(plotType,'matlab.graphics.primitive.Patch')
+                adjustHistogramProperties(ax(a), styleSettings);
+            elseif strcmp(plotType, 'matlab.graphics.chart.primitive.Bar')
+                adjustBarChartProperties(ax(a), styleSettings);
+            end
+        end
+    end
+end
+
+function applyLineColor(lines, colormapFunc)
+    % Apply color to line objects
+    numLines = length(lines);
+    cmap = colormapFunc(numLines);
+    for i = 1:numLines
+        lines(i).Color = cmap(i, :);
+    end
+end
+
+function adjustHistogramProperties(ax, styleSettings)
+    
+    plotChildren = get(ax, 'Children');
+    cmap = styleSettings.Histogram.FaceColor(length(plotChildren));
+
+    for h = 1:length(plotChildren)
+        hHist = plotChildren(h);
+        hHist.FaceColor = cmap(h,:);
+        hHist.EdgeColor = styleSettings.Histogram.EdgeColor;
+        hHist.FaceAlpha = styleSettings.Histogram.FaceAlpha;
+
+    end
+end
+
+function adjustBarChartProperties(ax, styleSettings)
+    
+    hBar = findobj(ax, 'Type', 'bar');
+    
+    if isempty(hBar)
+        warning('No bar chart found.');
+        return;
+    end
+    
+    cmap = styleSettings.BarChart.Colormap(length(hBar));
+
+    for h = 1:length(hBar)
+%         numGroups = size(hBar(h).YData, 2);
+        hBar(h).CData = cmap;
+        hBar(h).FaceColor = cmap;
+        hBar(h).EdgeColor = cmap(h,:)*0.98;
+
+    end
+    
+end

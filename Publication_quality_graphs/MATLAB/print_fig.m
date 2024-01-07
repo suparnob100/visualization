@@ -96,7 +96,7 @@ function print_fig(varargin)
     
     for i = 1:N
         fig = openFigure(Filepath, i);
-        modifyFigureProperties2(fig); % Adjust basic figure properties like color
+        modifyFigureProperties3(fig); % Adjust basic figure properties like color
         adjustLineAndMarkerProperties2(fig);     % Adjust line and marker properties
         adjustAxisProperties3(fig, L, W);    % Adjust axis properties
         adjustLegendTick(fig);       % Adjust legend properties
