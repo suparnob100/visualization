@@ -101,7 +101,8 @@ function print_fig(varargin)
         adjustLineAndMarkerProperties(fig);     % Adjust line and marker properties
         adjustAxisProperties2(fig, L, W, bg);    % Adjust axis properties
         adjustLegendTick(fig, AdjustLegend, LegendOrientation, Pad);       % Adjust legend properties
-        printOutput(fig, FileName, PathName, frmt, i);    % Print or save the figure
+        %% insert break point before printOutput if you want to make additional changes
+        printOutput(gcf, FileName, PathName, frmt, i);    % Print or save the figure
     end
     
 end
