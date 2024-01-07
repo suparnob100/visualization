@@ -1,9 +1,14 @@
-function adjustLegendTick(fig, oll, ori, pad)
+function adjustLegendTick(fig)
     % Function to adjust legend properties in a figure
     % fig: handle to the figure
-    % oll: flag to adjust the legend box (1 for down, 2 for up)
-    % ori: flag for horizontal orientation (1 for horizontal)
-    % pad: axis padding
+
+    % Load the style settings
+    styleSettings = mPlotStyle();
+
+    % Use the style settings for legend and tick adjustments
+    oll = styleSettings.LegendTick.LegendPosition;
+    ori = strcmp(styleSettings.LegendTick.LegendOrientation, 'horizontal');
+    pad = styleSettings.LegendTick.AxisPadding;
 
     % Access the legend and axes of the figure
     legendHandle = findobj(fig, 'Type', 'Legend');
@@ -14,22 +19,7 @@ function adjustLegendTick(fig, oll, ori, pad)
         return;
     end
         
-%     %% Set axis limits based on figure data
-%     plot_data = fig2data_(fig);
-%     xdata = cell2mat(plot_data.x);
-%     ydata = cell2mat(plot_data.y);
-%     set(gca(fig), 'XLim', [min(xdata(:)) max(xdata(:))], 'YLim', [min(ydata(:)) max(ydata(:))]);
-%     
-    axis tight
-
-    %% Adjust axes limits based on padding
-    xLimits = get(axesHandle, 'XLim');
-    yLimits = get(axesHandle, 'YLim');
-    xPad = pad * (xLimits(2) - xLimits(1));
-    yPad = pad * (yLimits(2) - yLimits(1));
-    set(axesHandle, 'XLim', [xLimits(1) - xPad, xLimits(2) + xPad]);
-    set(axesHandle, 'YLim', [yLimits(1) - yPad, yLimits(2) + yPad]);
-
+    [~,yLimits] = adjustAxisLimits(fig);
 
     %% Adjust legend orientation
     if ~isempty(legendHandle)
@@ -80,38 +70,37 @@ function adjustLegendTick(fig, oll, ori, pad)
     
     if ~strcmp(plotType, 'matlab.graphics.chart.primitive.Bar')
         
-        x_int_ticks = 0;
+        % X-axis tick modification
         xLimits = get(axesHandle, 'XLim');
-
-        if length(xticks)>5
-        numTicksX = 5; % Number of ticks on Y-axis
-        xticks(linspace(min(xLimits), max(xLimits), numTicksX))
+        if length(xticks(axesHandle)) > styleSettings.Ticks.NumXTicks
+            xticks(axesHandle, linspace(min(xLimits), max(xLimits), styleSettings.Ticks.NumXTicks));
         end
-
-        if x_int_ticks == 1
-            xticks(floor(linspace(min(xLimits), max(xLimits), length(xticks)+1)))
+        
+        if styleSettings.Ticks.XIntTicks
+            setIntegerTicks(axesHandle, 'x'); % Set integer ticks for X-axis
         end
+        
         if (~strcmp(axesHandle.XScale, 'log'))*(max(xLimits)<1000)
             set(axesHandle, 'XTickLabel', arrayfun(@(x) sprintf('%.1f', x), get(axesHandle, 'XTick'), 'UniformOutput', false));
         end
+
     end
 
     %% ytick modification
     
-    y_int_ticks = 0;
+    % Y-axis tick modification
     yLimits = get(axesHandle, 'YLim');
-
-    if length(yticks)>5
-    numTicksY = 5; % Number of ticks on Y-axis
-    yticks(linspace(min(yLimits), max(yLimits), numTicksY)) 
+    
+    if length(yticks(axesHandle)) > styleSettings.Ticks.NumYTicks
+        yticks(axesHandle, linspace(min(yLimits), max(yLimits), styleSettings.Ticks.NumYTicks));
     end
-
-    if y_int_ticks == 1
-        yticks(floor(linspace(min(yLimits), max(yLimits), length(yticks)+1)))
+    
+    if styleSettings.Ticks.YIntTicks
+        setIntegerTicks(axesHandle, 'y'); % Set integer ticks for Y-axis
     end
     
     if (~strcmp(axesHandle.YScale, 'log'))*(max(yLimits)<1000)
-        set(axesHandle, 'YTickLabel', arrayfun(@(y) sprintf('%.1f', y), get(axesHandle, 'YTick'), 'UniformOutput', false));
+        set(axesHandle, 'YTickLabel', arrayfun(@(x) sprintf('%.1f', x), get(axesHandle, 'YTick'), 'UniformOutput', false));
     end
 
     
@@ -129,3 +118,63 @@ end
 n = floor(log(abs(val))./log(base));
 
 end
+
+
+function [xLimits,yLimits] = adjustAxisLimits(fig)
+    % Function to adjust axis limits of a figure
+    % fig: handle to the figure
+
+    % Load the style settings
+    styleSettings = mPlotStyle();
+
+    % Get axes handle
+    axesHandle = gca(fig);
+
+    % Check if custom limits are to be used
+    if styleSettings.Axis.UseCustomLimits
+        % Set custom limits if specified
+        if ~isempty(styleSettings.Axis.CustomXLim)
+            set(axesHandle, 'XLim', styleSettings.Axis.CustomXLim);
+        end
+        if ~isempty(styleSettings.Axis.CustomYLim)
+            set(axesHandle, 'YLim', styleSettings.Axis.CustomYLim);
+        end
+    else
+        % Use padding-based limits
+        axis tight
+        xLimits = get(axesHandle, 'XLim');
+        yLimits = get(axesHandle, 'YLim');
+        xPad = styleSettings.Axis.xPad * (xLimits(2) - xLimits(1));
+        yPad = styleSettings.Axis.yPad * (yLimits(2) - yLimits(1));
+        set(axesHandle, 'XLim', [xLimits(1) - xPad, xLimits(2) + xPad]);
+        set(axesHandle, 'YLim', [yLimits(1) - yPad, yLimits(2) + yPad]);
+    end
+    
+end
+
+function setIntegerTicks(axesHandle, axisType)
+    % Set integer ticks for the specified axis (X or Y) of the given axes handle
+    % axesHandle: Handle to the axes
+    % axisType: 'x' for X-axis, 'y' for Y-axis
+
+    if axisType == 'x'
+        axisLimits = get(axesHandle, 'XLim');
+    else
+        axisLimits = get(axesHandle, 'YLim');
+    end
+
+    % Calculate the step size to get at most 5 integer ticks
+    range = axisLimits(2) - axisLimits(1);
+    stepSize = max(ceil(range / 4), 1); % Ensures at least one tick
+
+    % Generate integer ticks with the calculated step size
+    intTicks = ceil(axisLimits(1)/stepSize)*stepSize : stepSize : floor(axisLimits(2)/stepSize)*stepSize;
+
+    % Apply the ticks to the specified axis
+    if axisType == 'x'
+        set(axesHandle, 'XTick', intTicks);
+    else
+        set(axesHandle, 'YTick', intTicks);
+    end
+end
+

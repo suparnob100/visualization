@@ -77,7 +77,6 @@ function print_fig(varargin)
     set(0,'DefaultTextFontname', 'CMU Serif')
     set(0,'DefaultAxesFontName', 'CMU Serif')
    
-    
     if (FormatNumber == 0)
         formats1 = getFormatInfo(); % Assume getFormats() returns formats1, formats2, and formats3
     else
@@ -97,10 +96,10 @@ function print_fig(varargin)
     
     for i = 1:N
         fig = openFigure(Filepath, i);
-        modifyFigureProperties(fig, Font, ChangeColor); % Adjust basic figure properties like color
-        adjustLineAndMarkerProperties(fig);     % Adjust line and marker properties
-        adjustAxisProperties2(fig, L, W, bg);    % Adjust axis properties
-        adjustLegendTick(fig, AdjustLegend, LegendOrientation, Pad);       % Adjust legend properties
+        modifyFigureProperties2(fig); % Adjust basic figure properties like color
+        adjustLineAndMarkerProperties2(fig);     % Adjust line and marker properties
+        adjustAxisProperties3(fig, L, W);    % Adjust axis properties
+        adjustLegendTick(fig);       % Adjust legend properties
         %% insert break point before printOutput if you want to make additional changes
         printOutput(gcf, FileName, PathName, frmt, i);    % Print or save the figure
     end
