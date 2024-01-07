@@ -29,7 +29,7 @@ function modifyLineAndPlotColors(fig, styleSettings)
         if ~isempty(primaryPlot)
             plotType = class(primaryPlot(end));
 
-            if strcmp(plotType,'matlab.graphics.primitive.Patch')
+            if strcmp(plotType,'matlab.graphics.primitive.Patch')+strcmp(plotType, 'matlab.graphics.chart.primitive.Histogram')
                 adjustHistogramProperties(ax(a), styleSettings);
             elseif strcmp(plotType, 'matlab.graphics.chart.primitive.Bar')
                 adjustBarChartProperties(ax(a), styleSettings);
@@ -54,9 +54,19 @@ function adjustHistogramProperties(ax, styleSettings)
 
     for h = 1:length(plotChildren)
         hHist = plotChildren(h);
-        hHist.FaceColor = cmap(h,:);
-        hHist.EdgeColor = styleSettings.Histogram.EdgeColor;
-        hHist.FaceAlpha = styleSettings.Histogram.FaceAlpha;
+        
+        if isprop(hHist, 'FaceColor')
+            hHist.FaceColor = cmap(h,:);
+        end
+
+        if isprop(hHist, 'EdgeColor')
+            hHist.EdgeColor = styleSettings.Histogram.EdgeColor;
+        end
+
+        if isprop(hHist, 'FaceAlpha')
+            hHist.FaceAlpha = styleSettings.Histogram.FaceAlpha;
+        end
+
 
     end
 end

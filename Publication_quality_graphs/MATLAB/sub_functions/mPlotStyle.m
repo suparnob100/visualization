@@ -26,9 +26,9 @@ function styleStruct = mPlotStyle()
     styleStruct.Axis.GridLineWidth = 1;
 
     % Axis Limit and Padding Settings
-    styleStruct.Axis.CustomXLim = []; 
-    styleStruct.Axis.CustomYLim = [];
-    styleStruct.Axis.UseCustomLimits = 0;
+    styleStruct.Axis.CustomXLim = [0,100]; 
+    styleStruct.Axis.CustomYLim = [0,40];
+    styleStruct.Axis.UseCustomLimits = 1;
     styleStruct.Axis.xPad = 0.01;
     styleStruct.Axis.yPad = 0.00;
 
@@ -41,7 +41,7 @@ function styleStruct = mPlotStyle()
     % Histogram Properties
     styleStruct.Histogram.BinWidth = 2;
     styleStruct.Histogram.Normalization = 'probability';
-    styleStruct.Histogram.FaceColor = @viridis;
+    styleStruct.Histogram.FaceColor = @cividis;
     styleStruct.Histogram.EdgeColor = 'none';
     styleStruct.Histogram.FaceAlpha = 0.75;
 
@@ -51,7 +51,7 @@ function styleStruct = mPlotStyle()
     % General Style Properties
     styleStruct.General.FontSize = 15;
     styleStruct.General.FontName = 'CMU Serif';
-    styleStruct.General.TextInterpreter = 'latex';
+    styleStruct.General.TextInterpreter = 'tex';
 
     % Figure Properties Customization
     styleStruct.FigureProperties.ChangeColor = 1;
@@ -64,6 +64,6 @@ function styleStruct = mPlotStyle()
     styleStruct.Ticks.NumXTicks = 5;
     styleStruct.Ticks.XIntTicks = 0;
     styleStruct.Ticks.NumYTicks = 5;
-    styleStruct.Ticks.YIntTicks = 0;
+    styleStruct.Ticks.YIntTicks = 1;
 
 end

@@ -81,7 +81,7 @@ function adjustLegendTick(fig)
         end
         
         if (~strcmp(axesHandle.XScale, 'log'))*(max(xLimits)<1000)
-            set(axesHandle, 'XTickLabel', arrayfun(@(x) sprintf('%.2f', x), get(axesHandle, 'XTick'), 'UniformOutput', false));
+            set(axesHandle, 'XTickLabel', arrayfun(@(x) sprintf('%.1f', x), get(axesHandle, 'XTick'), 'UniformOutput', false));
         end
 
     end
@@ -100,7 +100,7 @@ function adjustLegendTick(fig)
     end
     
     if (~strcmp(axesHandle.YScale, 'log'))*(max(yLimits)<1000)
-        set(axesHandle, 'YTickLabel', arrayfun(@(x) sprintf('%.2f', x), get(axesHandle, 'YTick'), 'UniformOutput', false));
+        set(axesHandle, 'YTickLabel', arrayfun(@(x) sprintf('%.1f', x), get(axesHandle, 'YTick'), 'UniformOutput', false));
     end
 
     
@@ -149,6 +149,9 @@ function [xLimits,yLimits] = adjustAxisLimits(fig)
         set(axesHandle, 'XLim', [xLimits(1) - xPad, xLimits(2) + xPad]);
         set(axesHandle, 'YLim', [yLimits(1) - yPad, yLimits(2) + yPad]);
     end
+
+    xLimits = get(axesHandle, 'XLim');
+    yLimits = get(axesHandle, 'YLim');
     
 end
 
