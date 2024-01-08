@@ -27,7 +27,7 @@ function styleStruct = mPlotStyle()
 
     % Axis Limit and Padding Settings
     styleStruct.Axis.CustomXLim = [0,100]; 
-    styleStruct.Axis.CustomYLim = [0,40];
+    styleStruct.Axis.CustomYLim = [0,36];
     styleStruct.Axis.UseCustomLimits = 1;
     styleStruct.Axis.xPad = 0.01;
     styleStruct.Axis.yPad = 0.00;
@@ -41,7 +41,7 @@ function styleStruct = mPlotStyle()
     % Histogram Properties
     styleStruct.Histogram.BinWidth = 2;
     styleStruct.Histogram.Normalization = 'probability';
-    styleStruct.Histogram.FaceColor = @cividis;
+    styleStruct.Histogram.FaceColor = @magma;
     styleStruct.Histogram.EdgeColor = 'none';
     styleStruct.Histogram.FaceAlpha = 0.75;
 
